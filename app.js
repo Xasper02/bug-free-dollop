@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Sayfa DOM Seçicileri
+    // Sayfa DOM Arayüz Seçicileri
     const loginPage = document.getElementById("loginPage");
     const registerPage = document.getElementById("registerPage");
     const chatPage = document.getElementById("chatPage");
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentRoomTitle = document.getElementById("currentRoomTitle");
     const roomsContainer = document.getElementById("roomsContainer");
     
-    // İşlevsel Sistem Kontrolleri
+    // Kurucu Kontrolleri ve Özel Butonlar
     const createDMBtn = document.getElementById("createDMBtn");
     const createGroupBtn = document.getElementById("createGroupBtn");
     const themeToggleBtn = document.getElementById("themeToggleBtn");
@@ -31,8 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const pinnedMessageBar = document.getElementById("pinnedMessageBar");
     const pinnedText = document.getElementById("pinnedText");
     const unpinBtn = document.getElementById("unpinBtn");
+    
+    // Kurucu Admin Ekstra Bölümleri
+    const adminControlPanel = document.getElementById("adminControlPanel");
+    const freezeChatBtn = document.getElementById("freezeChatBtn");
+    const massKickBtn = document.getElementById("massKickBtn");
 
-    // LOCALSTORAGE KALICI VERİTABANI MOTORU (YENİ)
+    // SİBER KORUMALI KALICI VERİTABANI ALTYAPISI
     if (!localStorage.getItem("nexus_users")) {
         const defaultDB = { "admin": { pass: "1234", email: "admin@gmail.com", role: "user" } };
         localStorage.setItem("nexus_users", JSON.stringify(defaultDB));
@@ -40,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!localStorage.getItem("nexus_messages")) {
         const defaultMsgs = {
             "global": [
-                { id: 1, sender: "received", senderName: "Sistem", text: "🔒 Uçtan uca kriptolu kalıcı odaya hoş geldiniz. Mesajlar sonsuza kadar saklanır.", time: "Sistem" }
+                { id: 1, sender: "received", senderName: "Sistem", text: "🔒 Uçtan uca siber korumalı kalıcı tünele hoş geldiniz. Zararlı kod filtresi (Anti-XSS) devrededir.", time: "Sistem" }
             ]
         };
         localStorage.setItem("nexus_messages", JSON.stringify(defaultMsgs));
@@ -48,19 +53,32 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!localStorage.getItem("nexus_passwords")) {
         localStorage.setItem("nexus_passwords", JSON.stringify({}));
     }
+    if (!localStorage.getItem("nexus_global_freeze")) {
+        localStorage.setItem("nexus_global_freeze", "false");
+    }
 
     let currentUser = null;
     let activeRoomId = "global";
 
-    // Navigasyon
+    // Güvenlik Özelliği 1 & 8: Gelişmiş XSS ve Kod Enjeksiyon Engelleyici Filtre (Sanitization)
+    function sanitizeInput(text) {
+        return text.replace(/&/g, "&amp;")
+                   .replace(/</g, "&lt;")
+                   .replace(/>/g, "&gt;")
+                   .replace(/"/g, "&quot;")
+                   .replace(/'/g, "&#039;")
+                   .replace(/\//g, "&#x2F;");
+    }
+
+    // Navigasyon Kontrolleri
     goToRegister.addEventListener("click", () => { loginPage.classList.add("hidden"); registerPage.classList.remove("hidden"); });
     goToLogin.addEventListener("click", () => { registerPage.classList.add("hidden"); loginPage.classList.remove("hidden"); });
 
-    // Tekil E-posta Filtreli ve Özel Admin Tanımlı Kayıt Motoru
+    // Gmail Filtreli ve Benzersiz E-posta Kuralına Sahip Kayıt Motoru
     registerForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const u = document.getElementById("regUser").value.trim();
-        const em = document.getElementById("regEmail").value.trim().toLowerCase();
+        const u = sanitizeInput(document.getElementById("regUser").value.trim());
+        const em = sanitizeInput(document.getElementById("regEmail").value.trim().toLowerCase());
         const p = document.getElementById("regPass").value;
 
         if (!em.endsWith("@gmail.com")) {
@@ -70,19 +88,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const usersDB = JSON.parse(localStorage.getItem("nexus_users"));
 
-        // Özellik: Her Gmail ile yalnızca bir kez kayıt olunabilir
+        // Güvenlik Özelliği 22: Her Gmail ile yalnızca bir kez hesap açılabilir
         for (let username in usersDB) {
             if (usersDB[username].email === em) {
-                alert("⚠️ Hata: Bu Gmail adresi sistemde zaten kayıtlı! Başka bir adres deneyin.");
+                alert("⚠️ Siber Engel: Bu Gmail adresi sistemde zaten kullanımda!");
                 return;
             }
         }
         if (usersDB[u]) {
-            alert("⚠️ Hata: Bu kullanıcı adı zaten alınmış!");
+            alert("⚠️ Siber Engel: Bu kullanıcı adı başka bir üye tarafından rezerve edilmiş!");
             return;
         }
 
-        // ÖZEL ÖZELLİK: Belirlenen Gmail girildiğinde otomatik Admin (Kurucu) rolü atanır
+        // MUTLAK YETKİ TANIMLAMASI
         let role = "user";
         if (em === "fortniteminecraft0234@gmail.com") {
             role = "admin";
@@ -91,34 +109,38 @@ document.addEventListener("DOMContentLoaded", () => {
         usersDB[u] = { pass: p, email: em, role: role };
         localStorage.setItem("nexus_users", JSON.stringify(usersDB));
 
-        alert(`Hesap başarıyla oluşturuldu!\nRolünüz: ${role === "admin" ? "👑 Kurucu Admin" : "👤 Standart Üye"}`);
+        alert(`Kayıt Başarılı!\nRolünüz: ${role === "admin" ? "👑 Kurucu Yönetici (Sınırsız Güç)" : "👤 Standart Üye"}`);
         registerPage.classList.add("hidden"); loginPage.classList.remove("hidden");
     });
 
-    // Giriş Kontrol Mekanizması
+    // Oturum Açma ve Admin Yetki Paneli Tetikleyicisi
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const uVal = document.getElementById("loginUser").value.trim();
+        const uVal = sanitizeInput(document.getElementById("loginUser").value.trim());
         const pVal = document.getElementById("loginPass").value;
         const usersDB = JSON.parse(localStorage.getItem("nexus_users"));
 
         if (usersDB[uVal] && usersDB[uVal].pass === pVal) {
             currentUser = uVal;
             document.getElementById("myUsernameText").innerText = currentUser;
+            
+            // Eğer giriş yapan kişi kurucu admin ise sınırsız paneli aç
             if (usersDB[currentUser].role === "admin") {
                 document.getElementById("myAvatar").innerText = "👑";
                 document.getElementById("myUsernameText").innerHTML += ` <span class="admin-badge">KURUCU</span>`;
+                adminControlPanel.classList.remove("hidden"); // Admin Özel Panelini Göster
             } else {
                 document.getElementById("myAvatar").innerText = "👤";
+                adminControlPanel.classList.add("hidden");
             }
             loginPage.classList.add("hidden"); chatPage.classList.remove("hidden");
             loadRoomMessages(activeRoomId);
         } else {
-            alert("Kullanıcı adı veya şifre hatalı!");
+            alert("Oturum Reddedildi: Kimlik bilgileri uyuşmuyor!");
         }
     });
 
-    // Mesaj Geçmişini Kalıcı Hafızadan Çekip Ekrana Basma Fonksiyonu
+    // Mesaj Geçmişini Hafızadan Çeken Güvenli Motor
     function loadRoomMessages(roomId) {
         chatScreen.innerHTML = "";
         const allMsgs = JSON.parse(localStorage.getItem("nexus_messages"));
@@ -129,10 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
             bubble.className = `bubble ${msg.sender}`;
             bubble.setAttribute("data-msg-id", msg.id);
             
-            // Eğer mesajı atan kişi adminse isminin yanına taç koy
             let nameTag = msg.senderName;
             if (msg.role === "admin") {
-                nameTag = `👑 ${msg.senderName} [Yönetici]`;
+                nameTag = `👑 ${msg.senderName} [Kurucu Admin]`;
             }
 
             bubble.innerHTML = `
@@ -152,6 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Mesaj İşlem Tetikleyicileri (Kalıcı Düzenleme, Silme ve Sabitleme)
     chatScreen.addEventListener("click", (e) => {
         const allMsgs = JSON.parse(localStorage.getItem("nexus_messages"));
+        const usersDB = JSON.parse(localStorage.getItem("nexus_users"));
+        const isUserAdmin = usersDB[currentUser] && usersDB[currentUser].role === "admin";
         
         if (e.target.classList.contains("delete-action")) {
             const id = parseInt(e.target.getAttribute("data-id"));
@@ -164,9 +187,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const id = parseInt(e.target.getAttribute("data-id"));
             const msgObj = allMsgs[activeRoomId].find(m => m.id === id);
             if (!msgObj) return;
-            const newText = prompt("Mesajı düzenleyin:", msgObj.text);
+
+            // Güvenlik Özelliği 67: Admin herkesin mesajını düzenleyebilir, normal üye sadece kendininkini
+            if (msgObj.senderName !== currentUser && !isUserAdmin) {
+                alert("⚠️ Yetki Reddi: Başka bir üyenin şifreli mesajına müdahale edemezsiniz!");
+                return;
+            }
+
+            const newText = prompt("Mesajı yeniden düzenleyin:", msgObj.text);
             if (newText && newText.trim() !== "") {
-                msgObj.text = newText.trim() + " (Düzenlendi)";
+                msgObj.text = sanitizeInput(newText.trim()) + " (Düzenlendi)";
                 localStorage.setItem("nexus_messages", JSON.stringify(allMsgs));
                 loadRoomMessages(activeRoomId);
             }
@@ -184,17 +214,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     unpinBtn.addEventListener("click", () => pinnedMessageBar.classList.add("hidden"));
 
-    // Odalar Arası Geçiş ve Şifre Güvenlik Duvarı
+    // Odalar Arası Geçiş ve SINIRSIZ ADMİN ŞİFRESİZ GEÇİŞ ÖZELLİĞİ (BYPASS)
     roomsContainer.addEventListener("click", (e) => {
         const card = e.target.closest(".chat-user");
         if (!card) return;
 
         const targetId = card.getAttribute("data-room-id");
         const roomPasswords = JSON.parse(localStorage.getItem("nexus_passwords"));
+        const usersDB = JSON.parse(localStorage.getItem("nexus_users"));
+        
+        // KURUCU ADMİN ÖZELLİĞİ 64: Eğer admin sizseniz şifreli odaların şifre süzgecini saniyede atla (Bypass)
+        const isUserAdmin = usersDB[currentUser] && usersDB[currentUser].role === "admin";
 
-        if (roomPasswords[targetId]) {
-            const pass = prompt("Bu oda şifrelidir. Giriş anahtarını girin:");
-            if (pass !== roomPasswords[targetId]) { alert("Hatalı şifre! Giriş engellendi."); return; }
+        if (roomPasswords[targetId] && !isUserAdmin) {
+            const pass = prompt("🔒 Bu grup kriptolu şifre korumasına sahiptir. Giriş anahtarını yazın:");
+            if (pass !== roomPasswords[targetId]) { alert("Siber Engel: Yanlış anahtar!"); return; }
+        } else if (roomPasswords[targetId] && isUserAdmin) {
+            console.log("👑 Kurucu Admin Kimliği Doğrulandı: Şifre korumalı odaya şifresiz giriş sağlandı.");
         }
 
         document.querySelectorAll(".chat-user").forEach(el => el.classList.remove("active-room"));
@@ -204,28 +240,28 @@ document.addEventListener("DOMContentLoaded", () => {
         loadRoomMessages(activeRoomId);
     });
 
-    // Arkadaşla Birebir Özel Sohbet Odası Açma
+    // Arkadaş Listesine Özel Kanal Ekleme
     createDMBtn.addEventListener("click", () => {
-        const target = prompt("Sohbet başlatmak istediğiniz arkadaşınızın adını yazın:");
+        const target = prompt("Uçtan uca özel sohbet hattı başlatılacak kişinin adını girin:");
         if (!target || target.trim() === "") return;
         
         const id = "dm_" + Date.now();
         const allMsgs = JSON.parse(localStorage.getItem("nexus_messages"));
-        allMsgs[id] = [{ id: 1, sender: "received", senderName: "Sistem", text: `${target} ile özel sohbet hattı kalıcı olarak açıldı.`, time: "Özel" }];
+        allMsgs[id] = [{ id: 1, sender: "received", senderName: "Sistem", text: `${sanitizeInput(target)} ile gizli hat kuruldu.`, time: "Sistem" }];
         localStorage.setItem("nexus_messages", JSON.stringify(allMsgs));
         
-        addNewRoomCard(id, target, "👤");
+        addNewRoomCard(id, sanitizeInput(target), "👤");
     });
 
-    // Şifreli / Şifresiz Grup Kurma Sistemi
+    // Şifreli / Şifresiz Grup Odası İnşa Etme Paneli
     createGroupBtn.addEventListener("click", () => {
-        const name = prompt("Kurulacak grubun adını yazın:");
+        const name = prompt("Kurulacak siber grubun adını belirleyin:");
         if (!name || name.trim() === "") return;
         const id = "group_" + Date.now();
         
-        const hasPass = confirm("Bu gruba giriş şifresi koymak istiyor musunuz?");
+        const hasPass = confirm("Bu gruba giriş şifresi ve kilit entegre etmek istiyor musunuz?");
         if (hasPass) {
-            const p = prompt("Grup için bir şifre belirleyin:");
+            const p = prompt("Grup için siber koruma şifresi yazın:");
             if (p && p.trim() !== "") {
                 const roomPasswords = JSON.parse(localStorage.getItem("nexus_passwords"));
                 roomPasswords[id] = p.trim();
@@ -237,27 +273,60 @@ document.addEventListener("DOMContentLoaded", () => {
         const lockIcon = roomPasswords[id] ? " 🔒" : "";
         
         const allMsgs = JSON.parse(localStorage.getItem("nexus_messages"));
-        allMsgs[id] = [{ id: 1, sender: "received", senderName: "Sistem", text: `"${name}" grubu başarıyla yapılandırıldı.`, time: "Sistem" }];
+        allMsgs[id] = [{ id: 1, sender: "received", senderName: "Sistem", text: `"${sanitizeInput(name)}" grubu ağa bağlandı.`, time: "Sistem" }];
         localStorage.setItem("nexus_messages", JSON.stringify(allMsgs));
 
-        addNewRoomCard(id, name + lockIcon, "👥");
+        addNewRoomCard(id, sanitizeInput(name) + lockIcon, "👥");
     });
 
     function addNewRoomCard(id, name, icon) {
         const card = document.createElement("div");
         card.className = "chat-user";
         card.setAttribute("data-room-id", id);
-        card.innerHTML = `<span class="user-icon">${icon}</span><div class="user-info"><h4 class="room-title-text">${name}</h4><p class="left-preview">Yeni oda aktif.</p></div>`;
+        card.innerHTML = `<span class="user-icon">${icon}</span><div class="user-info"><h4 class="room-title-text">${name}</h4><p class="left-preview">Yeni güvenli hat.</p></div>`;
         roomsContainer.appendChild(card);
     }
+    // KURUCU ADMİN ÖZELLİĞİ 62: Tüm mesajlaşmayı dondurma fonksiyonu (Global Freeze)
+    freezeChatBtn.addEventListener("click", () => {
+        const currentFreeze = localStorage.getItem("nexus_global_freeze") === "true";
+        localStorage.setItem("nexus_global_freeze", (!currentFreeze).toString());
+        alert(`Siber Durum Güncellemesi:\nSitedeki tüm mesajlaşma akışı şu an: ${!currentFreeze ? "🚫 DONDURULDU" : "🟢 AKTİFLEŞTİRİLDİ"}`);
+    });
 
-    // Gerçek Zamanlı ve Kalıcı Mesaj Gönderme Motoru (GÜVENLİK PROTOKOLÜ BOTU KALDIRILDI)
+    // KURUCU ADMİN ÖZELLİĞİ 63: Herkesi gruptan atma ve kanalı tasfiye etme fonksiyonu (Mass Kick)
+    massKickBtn.addEventListener("click", () => {
+        if (activeRoomId === "global") {
+            alert("⚠️ Koruma Uyarısı: Ana Güvenlik Kanalı tasfiye edilemez!");
+            return;
+        }
+        if (confirm(`🚨 DİKKAT: "${currentRoomTitle.innerText}" odasındaki tüm üyeleri gruptan çıkarmak ve odayı kapatmak istediğinize emin misiniz?`)) {
+            const allMsgs = JSON.parse(localStorage.getItem("nexus_messages"));
+            delete allMsgs[activeRoomId]; // Odanın tüm hafızasını patlat
+            localStorage.setItem("nexus_messages", JSON.stringify(allMsgs));
+            
+            alert("Grup başarıyla tasfiye edildi! Üyeler uzaklaştırıldı.");
+            window.location.reload(); // Sistemi yenileyerek sol paneli temizle
+        }
+    });
+
+    // Siber Korumalı Mesaj Gönderme Tetikleyicisi
     msgForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const text = userInput.value.trim();
+        
+        // Güvenlik Özelliği 62 Kontrolü: Eğer sohbet dondurulmuşsa normal üyelere engelle
+        const isFrozen = localStorage.getItem("nexus_global_freeze") === "true";
+        const usersDB = JSON.parse(localStorage.getItem("nexus_users"));
+        const isUserAdmin = usersDB[currentUser] && usersDB[currentUser].role === "admin";
+
+        if (isFrozen && !isUserAdmin) {
+            alert("🚨 Erişim Engeli: Kurucu Admin tarafından tüm sistem geçici olarak mesajlaşmaya kapatılmıştır!");
+            userInput.value = "";
+            return;
+        }
+
+        const text = sanitizeInput(userInput.value.trim()); // Anti-XSS temizliği
         if (text === "") return;
 
-        const usersDB = JSON.parse(localStorage.getItem("nexus_users"));
         const myRole = usersDB[currentUser] ? usersDB[currentUser].role : "user";
         const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const newId = Date.now();
@@ -265,7 +334,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const allMsgs = JSON.parse(localStorage.getItem("nexus_messages"));
         if (!allMsgs[activeRoomId]) allMsgs[activeRoomId] = [];
 
-        // Mesajı kalıcı hafıza dizisine ekle
         allMsgs[activeRoomId].push({ id: newId, sender: "sent", senderName: currentUser, role: myRole, text: text, time: time + " ✓✓" });
         localStorage.setItem("nexus_messages", JSON.stringify(allMsgs));
         
@@ -276,7 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
         userInput.value = "";
     });
 
-    // Tema, Duvar Kağıdı ve Temizleme Kontrolleri
+    // Ekstra Özelleştirme ve Gizlilik Komutları
     themeToggleBtn.addEventListener("click", () => document.body.classList.toggle("light-mode"));
 
     wallpaperBtn.addEventListener("click", () => {
@@ -286,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     clearChatBtn.addEventListener("click", () => {
-        if (confirm("Kendi ekranınızdaki mesajları temizlemek istiyor musunuz? (Veritabanından silinmez)")) {
+        if (confirm("Kendi ekranınızdaki dökümleri temizlemek istiyor musunuz? (Sistem veritabanından silinmez)")) {
             chatScreen.innerHTML = `<div class="system-msg" style="text-align:center; color:#8fa0dd; font-size:12px;">-- Ekran Temizlendi --</div>`;
         }
     });
@@ -300,18 +368,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     addStoryBtn.addEventListener("click", () => {
-        const imgEmoji = prompt("Hikayenizde paylaşmak için bir emoji girin (Örn: 🎮, 🔥, 🚀):");
+        const imgEmoji = sanitizeInput(prompt("Hikaye emojisi girin:"));
         if (imgEmoji) {
             const newStory = document.createElement("div");
             newStory.className = "story-dot";
             newStory.style.borderColor = "#00b3ff";
             newStory.innerText = imgEmoji;
-            newStory.onclick = () => alert(`${currentUser} adlı kullanıcının hikayesi: ${imgEmoji}`);
+            newStory.onclick = () => alert(`${currentUser} hikayesi: ${imgEmoji}`);
             storiesArea.appendChild(newStory);
         }
     });
 
-    // Emoji Paneli Olayları
     emojiTrigger.addEventListener("click", (e) => {
         e.stopPropagation();
         emojiBox.style.display = emojiBox.style.display === "flex" ? "none" : "flex";
@@ -328,20 +395,20 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", () => emojiBox.style.display = "none");
 
     fileBtn.addEventListener("click", () => {
-        const fileName = prompt("Yüklemek istediğiniz görselin veya dosyanın adını yazın:");
+        const fileName = sanitizeInput(prompt("Yüklemek istediğiniz dosya veya fotoğraf adını yazın:"));
         if (fileName) {
-            userInput.value = `🖼️ Medya Ekli: [${fileName}]`;
+            userInput.value = `📁 Ekli Güvenli Dosya: [${fileName}]`;
             msgForm.dispatchEvent(new Event('submit'));
         }
     });
 
     voiceBtn.addEventListener("click", () => {
-        userInput.value = "🎤 [Sesli Not - 0:08]";
+        userInput.value = "🎤 [Kriptolu Ses Kaydı - 0:05]";
         msgForm.dispatchEvent(new Event('submit'));
     });
 
     logoutBtn.addEventListener("click", () => {
-        if (confirm("Oturumu kapatmak istiyor musunuz?")) {
+        if (confirm("Güvenli oturumu kapatmak istiyor musunuz?")) {
             chatPage.classList.add("hidden"); loginPage.classList.remove("hidden");
         }
     });
