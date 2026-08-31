@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <!-- 2. Ekran: Kayıt Paneli (Sıkı Gmail Kontrollü) -->
+    <!-- 2. Ekran: Kayıt Paneli (GMAIL KUTUSU KESİN EKLENDİ) -->
     <div id="registerPage" class="auth-card hidden">
         <h2>Yeni Kayıt Aç</h2>
         <p class="subtitle">NexusChat Ekosistemine Katılın</p>
@@ -35,6 +35,7 @@
             <div class="input-group">
                 <input type="text" id="regUser" placeholder="Kullanıcı Adı Belirleyin" required autocomplete="off">
             </div>
+            <!-- TAMAMEN YENİLENEN GMAIL GİRİŞ ALANI -->
             <div class="input-group">
                 <input type="email" id="regEmail" placeholder="Gmail Adresiniz (Sadece @gmail.com)" required autocomplete="off">
             </div>
@@ -50,17 +51,14 @@
 
     <!-- 3. Ekran: Gelişmiş Sohbet Paneli -->
     <div id="chatPage" class="app-window hidden">
-        <!-- Sol Menü: Kanallar, Gruplar ve Birebir Sohbet Yönetimi -->
         <div class="left-panel">
             <div class="panel-header">
                 <span>🌐 NexusChat</span>
                 <div class="header-actions">
-                    <!-- YENİ ÖZELLİK: Birebir ve Şifreli Grup Kurma Butonları -->
                     <button id="createDMBtn" class="action-btn dm-btn" title="Birebir Özel Sohbet">👤 Özel</button>
                     <button id="createGroupBtn" class="action-btn group-btn" title="Yeni Grup Oluştur">👥 +Grup</button>
                 </div>
             </div>
-            <!-- Odaların Dinamik Listeleneceği Konteyner -->
             <div class="chat-list" id="roomsContainer">
                 <div class="chat-user active-room" data-room-id="global">
                     <span class="user-icon">🌐</span>
@@ -72,7 +70,6 @@
             </div>
         </div>
 
-        <!-- Sağ Menü: Canlı Yazışma Alanı -->
         <div class="right-panel">
             <div class="chat-title">
                 <div class="status-dot"></div>
@@ -81,11 +78,7 @@
                     <span id="status-text">çevrimiçi</span>
                 </div>
             </div>
-
-            <div class="chat-screen" id="chatScreen">
-                <!-- Mesajlar JS motoru tarafından buraya yüklenecek -->
-            </div>
-
+            <div class="chat-screen" id="chatScreen"></div>
             <form id="msgForm" class="bottom-bar">
                 <input type="text" id="userInput" placeholder="Mesajınızı güvenle yazın..." autocomplete="off" required>
                 <button type="submit">Gönder</button>
