@@ -3,7 +3,7 @@ body { background-color: #0b0f19; height: 100vh; display: flex; justify-content:
 
 .bg-glow { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 20% 20%, rgba(0, 230, 160, 0.12) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.12) 0%, transparent 40%); z-index: 1; }
 
-/* Giriş/Kayıt Kartı */
+/* Giriş ve Kayıt Panelleri */
 .auth-card { background: rgba(22, 28, 45, 0.9); border: 1px solid rgba(0, 230, 160, 0.25); padding: 40px 30px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; z-index: 2; box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 25px rgba(0, 230, 160, 0.1); }
 .auth-card h2 { color: #00e6a0; font-size: 26px; margin-bottom: 8px; text-shadow: 0 0 10px rgba(0, 230, 160, 0.3); }
 .auth-card .subtitle { color: #8fa0dd; font-size: 13px; margin-bottom: 25px; }
@@ -20,24 +20,29 @@ input:focus { border-color: #00e6a0; box-shadow: 0 0 12px rgba(0, 230, 160, 0.2)
 .card-footer a:hover { color: #00e6a0; }
 .hidden { display: none !important; }
 
-/* WhatsApp / Discord Karışımı Sohbet Paneli */
+/* Ana Sohbet Paneli */
 .app-window { width: 95%; max-width: 1200px; height: 90vh; background: #161c2d; display: flex; border-radius: 12px; border: 1px solid #00e6a0; box-shadow: 0 0 30px rgba(0, 230, 160, 0.2); overflow: hidden; z-index: 2; }
 .left-panel { width: 30%; background: #0f1422; border-right: 1px solid #1f2937; display: flex; flex-direction: column; }
 
-/* Sol Başlık Düzeni ve Grup Ekleme Butonu */
+/* Yenilenmiş Sol Üst Menü ve Buton Düzeni */
 .panel-header { padding: 15px; background: #1c2536; color: #00e6a0; font-weight: bold; border-bottom: 1px solid #1f2937; display: flex; justify-content: space-between; align-items: center; }
-.add-group-btn { background: #00e6a0; border: none; color: #0b0f19; font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
-.add-group-btn:hover { background: #00ffb3; }
+.header-actions { display: flex; gap: 6px; }
+.action-btn { border: none; color: #0b0f19; font-size: 11px; font-weight: bold; padding: 6px 10px; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
+.action-btn:hover { opacity: 0.9; }
+.dm-btn { background: #00b3ff; }
+.group-btn { background: #00e6a0; }
 
 .chat-list { flex: 1; overflow-y: auto; }
 .chat-user { padding: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #172033; cursor: pointer; transition: background 0.2s; }
 .chat-user:hover { background: #151d2a; }
 .chat-user.active-room { background: #1f2a3d; border-left: 4px solid #00e6a0; }
 
-.user-icon { font-size: 24px; background: #111827; padding: 5px; border-radius: 50%; border: 1px solid #00e6a0; }
-.user-info h4 { color: #fff; font-size: 14px; }
+.user-icon { font-size: 24px; background: #111827; padding: 5px; border-radius: 50%; border: 1px solid #00e6a0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+.user-info { flex: 1; min-width: 0; }
+.user-info h4 { color: #fff; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .user-info p { color: #8696a0; font-size: 12px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* Sağ Mesajlaşma Ekranı */
 .right-panel { width: 70%; display: flex; flex-direction: column; background: #0b111e; }
 .chat-title { padding: 15px; background: #1c2536; color: #fff; border-bottom: 1px solid #1f2937; display: flex; align-items: center; gap: 10px; }
 .chat-title h3 { font-size: 15px; }
