@@ -31,6 +31,15 @@ body { background-color: var(--bg-color); color: var(--text-color); height: 100v
 
 .bg-glow { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 20% 20%, rgba(0, 230, 160, 0.12) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.12) 0%, transparent 40%); z-index: 1; }
 
+/* Profil Alanı Stilleri */
+.profile-area { display: flex; align-items: center; gap: 8px; }
+.user-avatar-main { font-size: 20px; background: rgba(0,0,0,0.3); padding: 4px; border-radius: 50%; border: 1px solid var(--neon-green); cursor: pointer; }
+
+/* Sabitlenmiş Mesaj Şeridi */
+.pinned-bar { background: #1a2333; border-bottom: 1px solid var(--neon-blue); padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #d1d7db; z-index: 8; }
+.pin-icon { color: var(--neon-blue); margin-right: 8px; }
+.close-pin { cursor: pointer; color: #ff4b4b; font-weight: bold; }
+
 .auth-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 35px 25px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 25px rgba(0, 230, 160, 0.1); z-index: 5; }
 .auth-card h2 { color: var(--neon-green); font-size: 26px; margin-bottom: 5px; }
 .subtitle { color: #8fa0dd; font-size: 13px; margin-bottom: 25px; }
@@ -45,8 +54,8 @@ input:focus { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 230,
 .card-footer a { color: #8fa0dd; text-decoration: none; cursor: pointer; }
 .card-footer a:hover { color: var(--neon-green); }
 
-.app-window { width: 98%; max-width: 1300px; height: 95vh; background: var(--card-bg); display: flex; border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 0 30px rgba(0, 230, 160, 0.15); z-index: 5; }
-.left-panel { width: 30%; background: var(--sidebar-bg); border-right: 1px solid #1f2937; display: flex; flex-direction: column; }
+.app-window { width: 98%; max-width: 1400px; height: 95vh; background: var(--card-bg); display: flex; border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 0 30px rgba(0, 230, 160, 0.15); z-index: 5; }
+.left-panel { width: 30%; min-width: 320px; background: var(--sidebar-bg); border-right: 1px solid #1f2937; display: flex; flex-direction: column; }
 .panel-header { padding: 15px; background: rgba(0,0,0,0.15); border-bottom: 1px solid #1f2937; display: flex; justify-content: space-between; align-items: center; }
 .header-actions { display: flex; gap: 5px; }
 .action-btn { border: none; color: #0b0f19; font-size: 11px; font-weight: bold; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
@@ -78,6 +87,9 @@ input:focus { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 230,
 .bubble.sent { background: var(--msg-sent); align-self: flex-end; border-right: 3px solid var(--neon-green); }
 .time-tag { font-size: 10px; opacity: 0.6; margin-top: 4px; text-align: right; display: block; }
 
+/* Admin İsmi Rozeti */
+.admin-badge { background: #ff4b4b; color: #fff; font-size: 10px; padding: 1px 4px; border-radius: 3px; font-weight: bold; margin-left: 5px; vertical-align: middle; }
+
 .msg-actions { display: none; position: absolute; top: -15px; right: 5px; background: #1f2937; border-radius: 4px; padding: 2px 5px; gap: 5px; font-size: 10px; z-index: 10; border: 1px solid var(--neon-green); }
 .bubble:hover .msg-actions { display: flex; }
 .msg-actions span { cursor: pointer; color: #fff; padding: 0 2px; }
@@ -86,7 +98,7 @@ input:focus { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 230,
 .bottom-bar { padding: 12px; background: rgba(0,0,0,0.15); display: flex; gap: 8px; align-items: center; border-top: 1px solid #1f2937; }
 .bottom-bar input { flex: 1; padding: 10px; background: #111827; color: #fff; border: 1px solid #374151; border-radius: 8px; }
 .bottom-bar button { padding: 10px 16px; background: var(--neon-green); border: none; border-radius: 8px; color: #0b0f19; font-weight: bold; cursor: pointer; }
+#fileBtn, #voiceBtn, #emojiTrigger { background: none !important; font-size: 18px; padding: 0 !important; width: auto; color: var(--text-color); border: none; cursor: pointer; }
 
 .mini-emoji-box { display: none; position: absolute; bottom: 65px; left: 15px; background: #1c2536; border: 1px solid var(--neon-green); padding: 8px; border-radius: 8px; gap: 8px; z-index: 100; }
 .emoji-item { font-size: 18px; cursor: pointer; }
-.emoji-panel-trigger { background: none !important; font-size: 20px; padding: 0 !important; cursor: pointer; border: none; }
