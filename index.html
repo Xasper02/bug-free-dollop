@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusChat Ultimate - 100 Edition</title>
+    <title>NexusChat Ultimate - Absolute Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
     <!-- 1. Ekran: Giriş Paneli -->
     <div id="loginPage" class="auth-card">
         <h2>NexusChat Ultimate</h2>
-        <p class="subtitle">Güvenli İletişim Sistemi [v3]</p>
+        <p class="subtitle">Güvenli İletişim Sistemi [v4]</p>
         <form id="loginForm">
             <div class="input-group">
                 <input type="text" id="loginUser" placeholder="Kullanıcı Adı" required autocomplete="off">
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <!-- 2. Ekran: Kayıt Paneli (Gmail Filtreli) -->
+    <!-- 2. Ekran: Kayıt Paneli (Tekil E-posta Filtreli) -->
     <div id="registerPage" class="auth-card hidden">
         <h2>Yeni Kayıt Aç</h2>
         <p class="subtitle">Sisteme Gmail Adresinizle Katılın</p>
@@ -50,23 +50,26 @@
 
     <!-- 3. Ekran: Gelişmiş Sohbet Paneli -->
     <div id="chatPage" class="app-window hidden">
-        <!-- SOL PANEL: Kanallar, Hikayeler ve Arama -->
+        <!-- SOL PANEL: Kanallar, Profil Bilgisi ve Arama -->
         <div class="left-panel">
             <div class="panel-header">
-                <span style="font-weight: bold; color: var(--neon-green);">💬 NexusChat Web</span>
+                <div class="profile-area">
+                    <span id="myAvatar" class="user-avatar-main">👤</span>
+                    <span id="myUsernameText" style="font-weight: bold; color: var(--neon-green);">Yükleniyor...</span>
+                </div>
                 <div class="header-actions">
-                    <button id="createDMBtn" class="action-btn" style="background: var(--neon-blue);">👤 +Özel</button>
-                    <button id="createGroupBtn" class="action-btn" style="background: var(--neon-green);">👥 +Grup</button>
+                    <button id="createDMBtn" class="action-btn" style="background: var(--neon-blue);" title="Arkadaş Ekle">👤 +Özel</button>
+                    <button id="createGroupBtn" class="action-btn" style="background: var(--neon-green);" title="Grup Odası Aç">👥 +Grup</button>
                 </div>
             </div>
 
-            <!-- Durumlar / Hikayeler Kısmı -->
+            <!-- Hikayeler Çubuğu -->
             <div class="status-stories" id="storiesArea">
-                <div class="story-dot" id="addStoryBtn" title="Durum Ekle">+</div>
-                <div class="story-dot" title="Sistem Hikayesi">🌐</div>
+                <div class="story-dot" id="addStoryBtn" title="Durum / Hikaye Ekle">+</div>
+                <div class="story-dot" title="Nexus Duyuru">📢</div>
             </div>
 
-            <!-- Canlı Sohbet Filtreleme/Arama Kutusu -->
+            <!-- Canlı Arama Motoru -->
             <div class="search-container">
                 <input type="text" id="searchBar" placeholder="Sohbetlerde veya odalarda arayın...">
             </div>
@@ -77,7 +80,7 @@
                     <span class="user-icon">🌐</span>
                     <div class="user-info">
                         <h4 class="room-title-text">Ana Güvenlik Kanalı</h4>
-                        <p class="left-preview">Sistem: Kriptolu iletişim hattı hazır.</p>
+                        <p class="left-preview">Kriptolu genel ağ tüneli aktif.</p>
                     </div>
                 </div>
             </div>
@@ -85,6 +88,13 @@
 
         <!-- SAĞ PANEL: Yazışma, Düzenleme, Temalar, Özelleştirmeler -->
         <div class="right-panel">
+            <!-- Sabitlenmiş Mesaj Şeridi (Özellik 27) -->
+            <div id="pinnedMessageBar" class="pinned-bar hidden">
+                <span class="pin-icon">📌</span>
+                <p id="pinnedText">Sabitlenmiş önemli bir mesaj bulunmuyor.</p>
+                <span id="unpinBtn" class="close-pin">✕</span>
+            </div>
+
             <div class="chat-title">
                 <div class="title-meta">
                     <div class="status-dot"></div>
@@ -95,8 +105,8 @@
                 </div>
                 <div class="system-controls">
                     <button id="themeToggleBtn" title="Karanlık/Aydınlık Mod Değiştir">🌓</button>
-                    <button id="wallpaperBtn" title="Sohbet Duvar Kağıdı Rengini Değiştir">🎨</button>
-                    <button id="clearChatBtn" title="Tüm Mesaj Geçmişini Temizle">🗑️</button>
+                    <button id="wallpaperBtn" title="Sohbet Arka Plan Temasını Değiştir">🎨</button>
+                    <button id="clearChatBtn" title="Kendi Ekranımdaki Mesajları Temizle">🗑️</button>
                     <button id="logoutBtn" title="Oturumu Güvenli Kapat">🚪</button>
                 </div>
             </div>
@@ -104,7 +114,7 @@
             <!-- Canlı Mesajlaşma Ekranı -->
             <div class="chat-screen" id="chatScreen"></div>
 
-            <!-- Hızlı Mini Emoji Paneli Kutusu -->
+            <!-- Hızlı Mini Emoji Paneli -->
             <div class="mini-emoji-box" id="emojiBox">
                 <span class="emoji-item">😀</span>
                 <span class="emoji-item">😂</span>
@@ -112,13 +122,16 @@
                 <span class="emoji-item">❤️</span>
                 <span class="emoji-item">👍</span>
                 <span class="emoji-item">🚀</span>
+                <span class="emoji-item">👑</span>
+                <span class="emoji-item">🎮</span>
             </div>
 
             <!-- Alt Gönderim Çubuğu -->
             <form id="msgForm" class="bottom-bar">
                 <button type="button" class="emoji-panel-trigger" id="emojiTrigger">😀</button>
-                <button type="button" id="fileBtn" style="background:none; font-size:18px; padding:0; width:auto; color:var(--text-color); border:none; cursor:pointer;">📎</button>
-                <input type="text" id="userInput" placeholder="Kriptolu bir mesaj yazın..." autocomplete="off" required>
+                <button type="button" id="fileBtn" title="Dosya/Fotoğraf Gönder">📎</button>
+                <button type="button" id="voiceBtn" title="Sesli Not Gönder (Simüle)">🎤</button>
+                <input type="text" id="userInput" placeholder="Güvenli mesaj yazın..." autocomplete="off" required>
                 <button type="submit">Gönder</button>
             </form>
         </div>
