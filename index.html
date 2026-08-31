@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusChat Ultimate</title>
+    <title>NexusChat Ultimate - Group Mode</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="bg-glow"></div>
 
-    <!-- Giriş Ekranı -->
+    <!-- 1. Ekran: Giriş Paneli -->
     <div id="loginPage" class="auth-card">
         <h2>NexusChat Ultimate</h2>
         <p class="subtitle">Güvenli İletişim Portalı</p>
@@ -27,13 +27,17 @@
         </div>
     </div>
 
-    <!-- Kayıt Olma Ekranı -->
+    <!-- 2. Ekran: Kayıt Paneli (Gmail Ekli) -->
     <div id="registerPage" class="auth-card hidden">
         <h2>Yeni Kayıt Aç</h2>
         <p class="subtitle">NexusChat Ekosistemine Katılın</p>
         <form id="registerForm">
             <div class="input-group">
                 <input type="text" id="regUser" placeholder="Kullanıcı Adı Belirleyin" required autocomplete="off">
+            </div>
+            <!-- YENİ ÖZELLİK: Gmail / E-posta Kayıt Alanı -->
+            <div class="input-group">
+                <input type="email" id="regEmail" placeholder="Gmail Adresiniz (Örn: ad@gmail.com)" required autocomplete="off">
             </div>
             <div class="input-group">
                 <input type="password" id="regPass" placeholder="Şifre Oluşturun" required>
@@ -45,39 +49,43 @@
         </div>
     </div>
 
-    <!-- Sohbet Odası (WhatsApp Modu) -->
+    <!-- 3. Ekran: Sohbet Paneli (Grup Oluşturma Özellikli) -->
     <div id="chatPage" class="app-window hidden">
+        <!-- Sol Menü: Kanallar ve Grup Yönetimi -->
         <div class="left-panel">
-            <div class="panel-header">🌐 NexusChat Odaları</div>
-            <div class="chat-list">
-                <div class="chat-user">
+            <div class="panel-header">
+                <span>🌐 NexusChat Odaları</span>
+                <!-- YENİ ÖZELLİK: Herkesin Grup Oluşturmasını Sağlayan Buton -->
+                <button id="createGroupBtn" class="add-group-btn" title="Yeni Grup Oluştur">➕ Grup Kur</button>
+            </div>
+            <!-- Odaların Dinamik Olarak Listeleneceği Alan -->
+            <div class="chat-list" id="roomsContainer">
+                <div class="chat-user active-room" data-room-id="global">
                     <span class="user-icon">💬</span>
                     <div class="user-info">
-                        <h4>Ana Güvenlik Kanalı</h4>
-                        <p id="left-preview">Bağlantı bekleniyor...</p>
+                        <h4 class="room-title-text">Ana Güvenlik Kanalı</h4>
+                        <p class="left-preview">Sistem: Güvenli hat aktif.</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Sağ Menü: Sohbet Ekranı -->
         <div class="right-panel">
             <div class="chat-title">
                 <div class="status-dot"></div>
                 <div>
-                    <h3>Ana Güvenlik Kanalı</h3>
+                    <h3 id="currentRoomTitle">Ana Güvenlik Kanalı</h3>
                     <span id="status-text">çevrimiçi</span>
                 </div>
             </div>
 
             <div class="chat-screen" id="chatScreen">
-                <div class="bubble received">
-                    Sistem doğrulandı. Hoş geldiniz!
-                    <span class="time-tag">Şimdi</span>
-                </div>
+                <!-- Mesajlar JS tarafından bu odaya göre doldurulacak -->
             </div>
 
             <form id="msgForm" class="bottom-bar">
-                <input type="text" id="userInput" placeholder="Mesajınızı yazın..." autocomplete="off" required>
+                <input type="text" id="userInput" placeholder="Mesajınızı güvenle yazın..." autocomplete="off" required>
                 <button type="submit">Gönder</button>
             </form>
         </div>
