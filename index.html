@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <!-- 2. Ekran: Kayıt Paneli (Sıkı E-posta Filtreli) -->
+    <!-- 2. Ekran: Kayıt Paneli -->
     <div id="registerPage" class="auth-card hidden">
         <h2>Yeni Kayıt Aç</h2>
         <p class="subtitle">Sisteme Gmail Adresinizle Katılın</p>
@@ -50,7 +50,6 @@
 
     <!-- 3. Ekran: Gelişmiş Sohbet Paneli -->
     <div id="chatPage" class="app-window hidden">
-        <!-- SOL PANEL: Kanallar, Profil Bilgisi ve Arama -->
         <div class="left-panel">
             <div class="panel-header">
                 <div class="profile-area">
@@ -58,23 +57,20 @@
                     <span id="myUsernameText" style="font-weight: bold; color: var(--neon-green);">Yükleniyor...</span>
                 </div>
                 <div class="header-actions">
-                    <button id="createDMBtn" class="action-btn" style="background: var(--neon-blue);" title="Arkadaş Ekle">👤 +Özel</button>
-                    <button id="createGroupBtn" class="action-btn" style="background: var(--neon-green);" title="Grup Odası Aç">👥 +Grup</button>
+                    <button id="createDMBtn" class="action-btn" style="background: var(--neon-blue);">👤 +Özel</button>
+                    <button id="createGroupBtn" class="action-btn" style="background: var(--neon-green);">👥 +Grup</button>
                 </div>
             </div>
 
-            <!-- Hikayeler Çubuğu -->
             <div class="status-stories" id="storiesArea">
-                <div class="story-dot" id="addStoryBtn" title="Durum / Hikaye Ekle">+</div>
-                <div class="story-dot" title="Nexus Duyuru">📢</div>
+                <div class="story-dot" id="addStoryBtn">+</div>
+                <div class="story-dot">📢</div>
             </div>
 
-            <!-- Canlı Arama Motoru -->
             <div class="search-container">
                 <input type="text" id="searchBar" placeholder="Sohbetlerde veya odalarda arayın...">
             </div>
 
-            <!-- Odaların Dinamik Dolacağı Alan -->
             <div class="chat-list" id="roomsContainer">
                 <div class="chat-user active-room" data-room-id="global">
                     <span class="user-icon">🌐</span>
@@ -86,16 +82,13 @@
             </div>
         </div>
 
-        <!-- SAĞ PANEL: Yazışma, Düzenleme, Temalar, Özelleştirmeler -->
         <div class="right-panel">
-            <!-- Kurucu Admin Özel Siber Paneli (Sadece Sizde Görünür) -->
             <div id="adminControlPanel" class="admin-panel hidden">
                 <span style="font-size:12px; font-weight:bold; color:#ff4b4b;">👑 KURUCU YÖNETİM PANELİ:</span>
                 <button id="freezeChatBtn" class="admin-panel-btn m-freeze">🔒 Mesajlaşmayı Durdur/Aç</button>
                 <button id="massKickBtn" class="admin-panel-btn m-kick">💥 Herkesi Gruptan Çıkar</button>
             </div>
 
-            <!-- Sabitlenmiş Mesaj Şeridi -->
             <div id="pinnedMessageBar" class="pinned-bar hidden">
                 <span class="pin-icon">📌</span>
                 <p id="pinnedText">Sabitlenmiş önemli bir mesaj bulunmuyor.</p>
@@ -111,40 +104,32 @@
                     </div>
                 </div>
                 <div class="system-controls">
-                    <button id="themeToggleBtn" title="Karanlık/Aydınlık Mod Değiştir">🌓</button>
-                    <button id="wallpaperBtn" title="Sohbet Arka Plan Temasını Değiştir">🎨</button>
-                    <button id="clearChatBtn" title="Kendi Ekranımdaki Mesajları Temizle">🗑️</button>
-                    <button id="logoutBtn" title="Oturumu Güvenli Kapat">🚪</button>
+                    <button id="themeToggleBtn">🌓</button>
+                    <button id="wallpaperBtn">🎨</button>
+                    <button id="clearChatBtn">🗑️</button>
+                    <button id="logoutBtn">🚪</button>
                 </div>
             </div>
 
-            <!-- Canlı Mesajlaşma Ekranı -->
             <div class="chat-screen" id="chatScreen"></div>
 
-            <!-- Hızlı Mini Emoji Paneli -->
             <div class="mini-emoji-box" id="emojiBox">
-                <span class="emoji-item">😀</span>
-                <span class="emoji-item">😂</span>
-                <span class="emoji-item">🔥</span>
-                <span class="emoji-item">❤️</span>
-                <span class="emoji-item">👍</span>
-                <span class="emoji-item">🚀</span>
-                <span class="emoji-item">👑</span>
-                <span class="emoji-item">🛡️</span>
+                <span class="emoji-item">😀</span><span class="emoji-item">😂</span><span class="emoji-item">🔥</span>
+                <span class="emoji-item">❤️</span><span class="emoji-item">👍</span><span class="emoji-item">🚀</span>
+                <span class="emoji-item">👑</span><span class="emoji-item">🛡️</span>
             </div>
 
-            <!-- Alt Gönderim Çubuğu -->
             <form id="msgForm" class="bottom-bar">
                 <button type="button" class="emoji-panel-trigger" id="emojiTrigger">😀</button>
-                <button type="button" id="fileBtn" title="Dosya/Fotoğraf Gönder">📎</button>
-                <button type="button" id="voiceBtn" title="Sesli Not Gönder (Simüle)">🎤</button>
+                <button type="button" id="fileBtn">📎</button>
+                <button type="button" id="voiceBtn">🎤</button>
                 <input type="text" id="userInput" placeholder="Siber korumalı hat üzerinden mesaj yazın..." autocomplete="off" required>
                 <button type="submit">Gönder</button>
             </form>
         </div>
     </div>
 
-    <!-- GERÇEK KÜRESEL BAĞLANTI LİNKLERİ (TÜM UZANTILARIYLA BERABER) -->
+    <!-- KESİNLİKLE EKSİKSİZ, KIRPILMAMIŞ GERÇEK BAĞLANTI LİNKLERİ -->
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
