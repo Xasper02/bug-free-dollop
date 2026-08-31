@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusChat Ultimate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <!-- Giriş Ekranı -->
+    <div id="loginPage" class="auth-card">
+        <h2>NexusChat Ultimate</h2>
+        <p class="subtitle">Güvenli İletişim Portalı</p>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="loginUser" placeholder="Kullanıcı Adı" required autocomplete="off">
+            </div>
+            <div class="input-group">
+                <input type="password" id="loginPass" placeholder="Şifre" required>
+            </div>
+            <button type="submit" class="btn-neon">Giriş Yetkisi Al</button>
+        </form>
+        <div class="card-footer">
+            <a id="goToRegister">Hesabın yok mu? Yeni Kayıt Aç</a>
+        </div>
+    </div>
+
+    <!-- Kayıt Olma Ekranı -->
+    <div id="registerPage" class="auth-card hidden">
+        <h2>Yeni Kayıt Aç</h2>
+        <p class="subtitle">NexusChat Ekosistemine Katılın</p>
+        <form id="registerForm">
+            <div class="input-group">
+                <input type="text" id="regUser" placeholder="Kullanıcı Adı Belirleyin" required autocomplete="off">
+            </div>
+            <div class="input-group">
+                <input type="password" id="regPass" placeholder="Şifre Oluşturun" required>
+            </div>
+            <button type="submit" class="btn-neon">Kayıt İşlemini Tamamla</button>
+        </form>
+        <div class="card-footer">
+            <a id="goToLogin">Zaten hesabın var mı? Giriş Yap</a>
+        </div>
+    </div>
+
+    <!-- Sohbet Odası (WhatsApp Modu) -->
+    <div id="chatPage" class="app-window hidden">
+        <div class="left-panel">
+            <div class="panel-header">🌐 NexusChat Odaları</div>
+            <div class="chat-list">
+                <div class="chat-user">
+                    <span class="user-icon">💬</span>
+                    <div class="user-info">
+                        <h4>Ana Güvenlik Kanalı</h4>
+                        <p id="left-preview">Bağlantı bekleniyor...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="chat-title">
+                <div class="status-dot"></div>
+                <div>
+                    <h3>Ana Güvenlik Kanalı</h3>
+                    <span id="status-text">çevrimiçi</span>
+                </div>
+            </div>
+
+            <div class="chat-screen" id="chatScreen">
+                <div class="bubble received">
+                    Sistem doğrulandı. Hoş geldiniz!
+                    <span class="time-tag">Şimdi</span>
+                </div>
+            </div>
+
+            <form id="msgForm" class="bottom-bar">
+                <input type="text" id="userInput" placeholder="Mesajınızı yazın..." autocomplete="off" required>
+                <button type="submit">Gönder</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

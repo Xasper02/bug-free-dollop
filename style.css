@@ -1,0 +1,46 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+body { background-color: #0b0f19; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
+
+.bg-glow { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 20% 20%, rgba(0, 230, 160, 0.12) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.12) 0%, transparent 40%); z-index: 1; }
+
+.auth-card { background: rgba(22, 28, 45, 0.9); border: 1px solid rgba(0, 230, 160, 0.25); padding: 40px 30px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; z-index: 2; box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 25px rgba(0, 230, 160, 0.1); }
+.auth-card h2 { color: #00e6a0; font-size: 26px; margin-bottom: 8px; text-shadow: 0 0 10px rgba(0, 230, 160, 0.3); }
+.auth-card .subtitle { color: #8fa0dd; font-size: 13px; margin-bottom: 25px; }
+
+.input-group { margin-bottom: 18px; }
+input { width: 100%; padding: 14px 20px; background: #111827; border: 1px solid #374151; border-radius: 8px; color: #fff; font-size: 15px; outline: none; transition: all 0.3s; }
+input:focus { border-color: #00e6a0; box-shadow: 0 0 12px rgba(0, 230, 160, 0.2); }
+
+.btn-neon { width: 100%; padding: 14px; background: linear-gradient(135deg, #00e6a0, #00b3ff); border: none; border-radius: 8px; color: #0b0f19; font-size: 15px; font-weight: bold; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0, 230, 160, 0.3); }
+.btn-neon:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 230, 160, 0.5); }
+
+.card-footer { margin-top: 20px; }
+.card-footer a { color: #8fa0dd; text-decoration: none; font-size: 13px; cursor: pointer; }
+.card-footer a:hover { color: #00e6a0; }
+.hidden { display: none !important; }
+
+/* Sohbet Ekranı Detayları */
+.app-window { width: 95%; max-width: 1200px; height: 90vh; background: #161c2d; display: flex; border-radius: 12px; border: 1px solid #00e6a0; box-shadow: 0 0 30px rgba(0, 230, 160, 0.2); overflow: hidden; z-index: 2; }
+.left-panel { width: 30%; background: #0f1422; border-right: 1px solid #1f2937; display: flex; flex-direction: column; }
+.panel-header { padding: 15px; background: #1c2536; color: #00e6a0; font-weight: bold; border-bottom: 1px solid #1f2937; }
+.chat-list { flex: 1; overflow-y: auto; }
+.chat-user { padding: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #172033; background: #1a2333; }
+.user-icon { font-size: 24px; background: #111827; padding: 5px; border-radius: 50%; border: 1px solid #00e6a0; }
+.user-info h4 { color: #fff; font-size: 14px; }
+.user-info p { color: #8fa0dd; font-size: 12px; }
+
+.right-panel { width: 70%; display: flex; flex-direction: column; background: #0b111e; }
+.chat-title { padding: 15px; background: #1c2536; color: #fff; border-bottom: 1px solid #1f2937; display: flex; align-items: center; gap: 10px; }
+.chat-title h3 { font-size: 15px; }
+.chat-title span { font-size: 11px; color: #00e6a0; }
+.status-dot { width: 8px; height: 8px; background: #00e6a0; border-radius: 50%; box-shadow: 0 0 8px #00e6a0; }
+
+.chat-screen { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+.bubble { max-width: 65%; padding: 10px 14px; border-radius: 8px; font-size: 14px; color: #fff; line-height: 1.4; position: relative; }
+.bubble.received { background: #1f2937; align-self: flex-start; border-left: 3px solid #8a2be2; }
+.bubble.sent { background: #005c4b; align-self: flex-end; border-right: 3px solid #00e6a0; }
+.time-tag { font-size: 10px; color: #8fa0dd; margin-top: 5px; text-align: right; display: block; }
+
+.bottom-bar { padding: 15px; background: #1c2536; display: flex; gap: 10px; border-top: 1px solid #1f2937; }
+.bottom-bar input { flex: 1; padding: 12px; background: #0b0f19; border: 1px solid #374151; border-radius: 6px; color: #fff; outline: none; }
+.bottom-bar button { padding: 0 20px; background: linear-gradient(135deg, #00e6a0, #00b3ff); border: none; border-radius: 6px; color: #0b0f19; font-weight: bold; cursor: pointer; }
