@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusChat Ultimate - Absolute Edition</title>
+    <title>NexusChat Ultimate - Absolute Fortress</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
     <!-- 1. Ekran: Giriş Paneli -->
     <div id="loginPage" class="auth-card">
         <h2>NexusChat Ultimate</h2>
-        <p class="subtitle">Güvenli İletişim Sistemi [v4]</p>
+        <p class="subtitle">Siber Koruma Sistemli Güvenli Portal [v5]</p>
         <form id="loginForm">
             <div class="input-group">
                 <input type="text" id="loginUser" placeholder="Kullanıcı Adı" required autocomplete="off">
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <!-- 2. Ekran: Kayıt Paneli (Tekil E-posta Filtreli) -->
+    <!-- 2. Ekran: Kayıt Paneli (Sıkı E-posta Filtreli) -->
     <div id="registerPage" class="auth-card hidden">
         <h2>Yeni Kayıt Aç</h2>
         <p class="subtitle">Sisteme Gmail Adresinizle Katılın</p>
@@ -88,7 +88,14 @@
 
         <!-- SAĞ PANEL: Yazışma, Düzenleme, Temalar, Özelleştirmeler -->
         <div class="right-panel">
-            <!-- Sabitlenmiş Mesaj Şeridi (Özellik 27) -->
+            <!-- Kurucu Admin Özel Siber Paneli (Sadece Sizde Görünür) -->
+            <div id="adminControlPanel" class="admin-panel hidden">
+                <span style="font-size:12px; font-weight:bold; color:#ff4b4b;">👑 KURUCU YÖNETİM PANELİ:</span>
+                <button id="freezeChatBtn" class="admin-panel-btn m-freeze">🔒 Mesajlaşmayı Durdur/Aç</button>
+                <button id="massKickBtn" class="admin-panel-btn m-kick">💥 Herkesi Gruptan Çıkar</button>
+            </div>
+
+            <!-- Sabitlenmiş Mesaj Şeridi -->
             <div id="pinnedMessageBar" class="pinned-bar hidden">
                 <span class="pin-icon">📌</span>
                 <p id="pinnedText">Sabitlenmiş önemli bir mesaj bulunmuyor.</p>
@@ -123,7 +130,7 @@
                 <span class="emoji-item">👍</span>
                 <span class="emoji-item">🚀</span>
                 <span class="emoji-item">👑</span>
-                <span class="emoji-item">🎮</span>
+                <span class="emoji-item">🛡️</span>
             </div>
 
             <!-- Alt Gönderim Çubuğu -->
@@ -131,7 +138,7 @@
                 <button type="button" class="emoji-panel-trigger" id="emojiTrigger">😀</button>
                 <button type="button" id="fileBtn" title="Dosya/Fotoğraf Gönder">📎</button>
                 <button type="button" id="voiceBtn" title="Sesli Not Gönder (Simüle)">🎤</button>
-                <input type="text" id="userInput" placeholder="Güvenli mesaj yazın..." autocomplete="off" required>
+                <input type="text" id="userInput" placeholder="Siber korumalı hat üzerinden mesaj yazın..." autocomplete="off" required>
                 <button type="submit">Gönder</button>
             </form>
         </div>
