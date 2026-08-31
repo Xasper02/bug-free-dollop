@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusChat Ultimate - Advanced Security</title>
+    <title>NexusChat Ultimate - 100 Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
     <!-- 1. Ekran: Giriş Paneli -->
     <div id="loginPage" class="auth-card">
         <h2>NexusChat Ultimate</h2>
-        <p class="subtitle">Güvenli İletişim Portalı</p>
+        <p class="subtitle">Güvenli İletişim Sistemi [v3]</p>
         <form id="loginForm">
             <div class="input-group">
                 <input type="text" id="loginUser" placeholder="Kullanıcı Adı" required autocomplete="off">
@@ -27,17 +27,16 @@
         </div>
     </div>
 
-    <!-- 2. Ekran: Kayıt Paneli (GMAIL KUTUSU KESİN EKLENDİ) -->
+    <!-- 2. Ekran: Kayıt Paneli (Gmail Filtreli) -->
     <div id="registerPage" class="auth-card hidden">
         <h2>Yeni Kayıt Aç</h2>
-        <p class="subtitle">NexusChat Ekosistemine Katılın</p>
+        <p class="subtitle">Sisteme Gmail Adresinizle Katılın</p>
         <form id="registerForm">
             <div class="input-group">
                 <input type="text" id="regUser" placeholder="Kullanıcı Adı Belirleyin" required autocomplete="off">
             </div>
-            <!-- TAMAMEN YENİLENEN GMAIL GİRİŞ ALANI -->
             <div class="input-group">
-                <input type="email" id="regEmail" placeholder="Gmail Adresiniz (Sadece @gmail.com)" required autocomplete="off">
+                <input type="email" id="regEmail" placeholder="Gmail Adresiniz (@gmail.com)" required autocomplete="off">
             </div>
             <div class="input-group">
                 <input type="password" id="regPass" placeholder="Şifre Oluşturun" required>
@@ -51,36 +50,75 @@
 
     <!-- 3. Ekran: Gelişmiş Sohbet Paneli -->
     <div id="chatPage" class="app-window hidden">
+        <!-- SOL PANEL: Kanallar, Hikayeler ve Arama -->
         <div class="left-panel">
             <div class="panel-header">
-                <span>🌐 NexusChat</span>
+                <span style="font-weight: bold; color: var(--neon-green);">💬 NexusChat Web</span>
                 <div class="header-actions">
-                    <button id="createDMBtn" class="action-btn dm-btn" title="Birebir Özel Sohbet">👤 Özel</button>
-                    <button id="createGroupBtn" class="action-btn group-btn" title="Yeni Grup Oluştur">👥 +Grup</button>
+                    <button id="createDMBtn" class="action-btn" style="background: var(--neon-blue);">👤 +Özel</button>
+                    <button id="createGroupBtn" class="action-btn" style="background: var(--neon-green);">👥 +Grup</button>
                 </div>
             </div>
+
+            <!-- Durumlar / Hikayeler Kısmı -->
+            <div class="status-stories" id="storiesArea">
+                <div class="story-dot" id="addStoryBtn" title="Durum Ekle">+</div>
+                <div class="story-dot" title="Sistem Hikayesi">🌐</div>
+            </div>
+
+            <!-- Canlı Sohbet Filtreleme/Arama Kutusu -->
+            <div class="search-container">
+                <input type="text" id="searchBar" placeholder="Sohbetlerde veya odalarda arayın...">
+            </div>
+
+            <!-- Odaların Dinamik Dolacağı Alan -->
             <div class="chat-list" id="roomsContainer">
                 <div class="chat-user active-room" data-room-id="global">
                     <span class="user-icon">🌐</span>
                     <div class="user-info">
                         <h4 class="room-title-text">Ana Güvenlik Kanalı</h4>
-                        <p class="left-preview">Sistem: Güvenli tünel aktif.</p>
+                        <p class="left-preview">Sistem: Kriptolu iletişim hattı hazır.</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SAĞ PANEL: Yazışma, Düzenleme, Temalar, Özelleştirmeler -->
         <div class="right-panel">
             <div class="chat-title">
-                <div class="status-dot"></div>
-                <div>
-                    <h3 id="currentRoomTitle">Ana Güvenlik Kanalı</h3>
-                    <span id="status-text">çevrimiçi</span>
+                <div class="title-meta">
+                    <div class="status-dot"></div>
+                    <div>
+                        <h3 id="currentRoomTitle" style="font-size: 15px;">Ana Güvenlik Kanalı</h3>
+                        <span id="status-text" style="font-size: 11px; color: var(--neon-green);">çevrimiçi</span>
+                    </div>
+                </div>
+                <div class="system-controls">
+                    <button id="themeToggleBtn" title="Karanlık/Aydınlık Mod Değiştir">🌓</button>
+                    <button id="wallpaperBtn" title="Sohbet Duvar Kağıdı Rengini Değiştir">🎨</button>
+                    <button id="clearChatBtn" title="Tüm Mesaj Geçmişini Temizle">🗑️</button>
+                    <button id="logoutBtn" title="Oturumu Güvenli Kapat">🚪</button>
                 </div>
             </div>
+
+            <!-- Canlı Mesajlaşma Ekranı -->
             <div class="chat-screen" id="chatScreen"></div>
+
+            <!-- Hızlı Mini Emoji Paneli Kutusu -->
+            <div class="mini-emoji-box" id="emojiBox">
+                <span class="emoji-item">😀</span>
+                <span class="emoji-item">😂</span>
+                <span class="emoji-item">🔥</span>
+                <span class="emoji-item">❤️</span>
+                <span class="emoji-item">👍</span>
+                <span class="emoji-item">🚀</span>
+            </div>
+
+            <!-- Alt Gönderim Çubuğu -->
             <form id="msgForm" class="bottom-bar">
-                <input type="text" id="userInput" placeholder="Mesajınızı güvenle yazın..." autocomplete="off" required>
+                <button type="button" class="emoji-panel-trigger" id="emojiTrigger">😀</button>
+                <button type="button" id="fileBtn" style="background:none; font-size:18px; padding:0; width:auto; color:var(--text-color); border:none; cursor:pointer;">📎</button>
+                <input type="text" id="userInput" placeholder="Kriptolu bir mesaj yazın..." autocomplete="off" required>
                 <button type="submit">Gönder</button>
             </form>
         </div>
