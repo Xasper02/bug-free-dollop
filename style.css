@@ -26,22 +26,27 @@
     --msg-received: #f3f4f6;
 }
 
-body { background-color: var(--bg-color); color: var(--text-color); height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; transition: background 0.3s; }
+body { background-color: var(--bg-color); color: var(--text-color); height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; transition: background 0.3s; }
 .hidden { display: none !important; }
 
 .bg-glow { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 20% 20%, rgba(0, 230, 160, 0.12) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.12) 0%, transparent 40%); z-index: 1; }
 
-/* Profil Alanı Stilleri */
 .profile-area { display: flex; align-items: center; gap: 8px; }
 .user-avatar-main { font-size: 20px; background: rgba(0,0,0,0.3); padding: 4px; border-radius: 50%; border: 1px solid var(--neon-green); cursor: pointer; }
 
-/* Sabitlenmiş Mesaj Şeridi */
+/* Kurucu Yönetim Paneli Şeridi CSS */
+.admin-panel { background: #1a1625; border-bottom: 2px solid #ff4b4b; padding: 10px 15px; display: flex; align-items: center; gap: 15px; z-index: 9; }
+.admin-panel-btn { border: none; color: #fff; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
+.admin-panel-btn:hover { opacity: 0.9; }
+.m-freeze { background: #d97706; }
+.m-kick { background: #dc2626; }
+
 .pinned-bar { background: #1a2333; border-bottom: 1px solid var(--neon-blue); padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #d1d7db; z-index: 8; }
 .pin-icon { color: var(--neon-blue); margin-right: 8px; }
 .close-pin { cursor: pointer; color: #ff4b4b; font-weight: bold; }
 
 .auth-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 35px 25px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 25px rgba(0, 230, 160, 0.1); z-index: 5; }
-.auth-card h2 { color: var(--neon-green); font-size: 26px; margin-bottom: 5px; }
+.auth-card h2 { color: var(--neon-green); font-size: 26px; margin-bottom: 5px; text-shadow: 0 0 10px rgba(0, 230, 160, 0.3); }
 .subtitle { color: #8fa0dd; font-size: 13px; margin-bottom: 25px; }
 
 .input-group { margin-bottom: 15px; position: relative; }
@@ -49,7 +54,7 @@ input { width: 100%; padding: 12px 15px; background: #111827; border: 1px solid 
 input:focus { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 230, 160, 0.2); }
 
 .btn-neon { width: 100%; padding: 12px; background: linear-gradient(135deg, var(--neon-green), var(--neon-blue)); border: none; border-radius: 8px; color: #0b0f19; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-.btn-neon:hover { transform: translateY(-1px); opacity: 0.9; }
+.btn-neon:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0, 230, 160, 0.4); }
 .card-footer { margin-top: 15px; font-size: 13px; }
 .card-footer a { color: #8fa0dd; text-decoration: none; cursor: pointer; }
 .card-footer a:hover { color: var(--neon-green); }
@@ -87,8 +92,7 @@ input:focus { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 230,
 .bubble.sent { background: var(--msg-sent); align-self: flex-end; border-right: 3px solid var(--neon-green); }
 .time-tag { font-size: 10px; opacity: 0.6; margin-top: 4px; text-align: right; display: block; }
 
-/* Admin İsmi Rozeti */
-.admin-badge { background: #ff4b4b; color: #fff; font-size: 10px; padding: 1px 4px; border-radius: 3px; font-weight: bold; margin-left: 5px; vertical-align: middle; }
+.admin-badge { background: #ff4b4b; color: #fff; font-size: 10px; padding: 1px 4px; border-radius: 3px; font-weight: bold; margin-left: 5px; vertical-align: middle; box-shadow: 0 0 8px #ff4b4b; }
 
 .msg-actions { display: none; position: absolute; top: -15px; right: 5px; background: #1f2937; border-radius: 4px; padding: 2px 5px; gap: 5px; font-size: 10px; z-index: 10; border: 1px solid var(--neon-green); }
 .bubble:hover .msg-actions { display: flex; }
